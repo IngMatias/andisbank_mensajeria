@@ -28,9 +28,15 @@ router.post('/messages/send', (req, res) => {
 
 // Obtener todos los mensajes de un usuario específico
 router.get('/messages/:userId', (req, res) => {
-    const userMessages = messages.get(parseInt(req.params.userId));
+    const { params } = req
 
-    if (userMessages != null) {
+    if (!params.userId) {
+        return res.status(400).send('Bad request.');
+    }
+
+    const userMessages = messages[parseInt(params.userId)];
+
+    if (!userMessages) {
         return res.status(200).send(userMessages);
     } else {
         return res.status(404).send('Not Found');
