@@ -1,9 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const users = require('../mocks/users/users');
 
 //Autenticar a los usuarios (Ejecutivos y Clientes)
 router.post('/auth/login', (req, res) => {
-    res.send('Usuario Logueado');
+    const {email, password} = req.body;
+
+    const user = users.find(user => user.email === email && user.password === password);
+    if (!email || !password) {
+        return res.status(400).send('Invalid data');
+    } else if (user == null) {
+        return res.status(401).send('Bad credentials.');
+    }
+    return res.status(200).send('Login successful!');
 });
 
 //Autenticar a los usuarios (Ejecutivos y Clientes)
