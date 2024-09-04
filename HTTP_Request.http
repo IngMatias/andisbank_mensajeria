@@ -1,4 +1,4 @@
 ### GET request to example server
-GET http://localhost:3000/api/messages/messages
+GET http://localhost:3000/api/messages/1
 
 ###

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const users = require('../mocks/users/users');
+const messages = require('../mocks/messages/messages');
 
 //Autenticar a los usuarios (Ejecutivos y Clientes)
 router.post('/auth/login', (req, res) => {
@@ -15,34 +16,26 @@ router.post('/auth/login', (req, res) => {
     return res.status(200).send('Login successful!');
 });
 
-//Autenticar a los usuarios (Ejecutivos y Clientes)
+//Autenticar a los usuarios
 router.post('/auth/logout', (req, res) => {
     res.send('Cierra la sesión');
 });
 
-// Enviar un nuevo mensaje (Requiere autenticación y autorización)
+// Enviar un nuevo mensaje
 router.post('/messages/send', (req, res) => {
     res.send('Enviar un nuevo mensaje');
 });
 
-// Obtener todos los mensajes (paginación)
-router.get('/messages', (req, res) => {
-    res.send('Obtener todos los mensajes');
+// Obtener todos los mensajes de un usuario específico
+router.get('/messages/:userId', (req, res) => {
+    const userMessages = messages.get(parseInt(req.params.userId));
+
+    if (userMessages != null) {
+        return res.status(200).send(userMessages);
+    } else {
+        return res.status(404).send('Not Found');
+    }
 });
 
-// Obtener todos los mensajes de un usuario específico (paginación)
-router.get('/messages/{userId}', (req, res) => {
-    res.send(`Obtener mensajes del usuario con ID ${req.params.userId}`);
-});
-
-// Obtener mensajes específico (paginación)
-router.get('/messages/{messageId}', (req, res) => {
-    res.send(`Obtener el mensaje con ID ${req.params.messageId}`);
-});
-
-// Eliminar un mensaje
-router.delete('/messages/{messageId}', (req, res) => {
-    res.send(`Eliminar el mensaje con ID ${req.params.messageId}`);
-});
 
 module.exports = router;
