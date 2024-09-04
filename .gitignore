@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # .idea folder
-./idea
+.idea/
