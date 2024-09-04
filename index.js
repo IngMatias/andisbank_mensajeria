@@ -6,8 +6,8 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // Rutas
-const mensajeRoutes = require('./routes/messages');
-app.use('/api/messages', menssageRoutes);
+const messageRoutes = require('./routes/messages');
+app.use('/api/', messageRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
